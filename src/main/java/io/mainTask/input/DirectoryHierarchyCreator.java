@@ -1,9 +1,10 @@
 package io.mainTask.input;
 
+import io.mainTask.analyzers.FileAnalyzer;
 import io.mainTask.analyzers.FileStructureAnalyzer;
 import io.mainTask.directoryStructureEntities.DirectoryHierarchy;
 
-import java.io.File;
+import java.io.*;
 import java.util.Objects;
 
 public class DirectoryHierarchyCreator {
@@ -24,6 +25,20 @@ public class DirectoryHierarchyCreator {
             if(file.isDirectory()){
                 putFilesWithNestedLevel(directoryHierarchy, file);
             }
+        }
+    }
+
+    public void createFromFile(String filePath){
+        try(FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader)){
+            String line;
+            while((line = bufferedReader.readLine()) != null){
+                directoryHierarchy.add(FileAnalyzer.analyzeLine(line, directoryHierarchy));
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

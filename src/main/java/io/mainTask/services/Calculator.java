@@ -9,7 +9,13 @@ public class Calculator {
         this.directoryHierarchy = directoryHierarchy;
     }
 
-    public long getDirectoriesCount(){
+    public long getDirectoriesCount() {
         return directoryHierarchy.stream().filter(item -> item.getFile().isFile()).count();
     }
+
+    public long getFilesCount() {
+        return directoryHierarchy.stream().filter(item -> item.getFile().isFile()).count();
+    }
+
+
 }
